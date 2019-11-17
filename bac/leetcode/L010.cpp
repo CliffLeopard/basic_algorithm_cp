@@ -50,9 +50,13 @@ public:
             unsigned long i = 1;
             for (i; i < s_length && position < p_length; i++) {
                 if (p[position] == '*') {
-                    if (p[position - 1] != s[i] ) { //&& p[position - 1] != '.'
+                    if (p[position - 1] != s[i]) { //&& p[position - 1] != '.'
+                        if (p[position - 1] != '.') {
+                            i--;
+                        } else {
+                            i -= 2;
+                        }
                         position++;
-                        i--;
                     }
                 } else {
                     if (p[position] != s[i] && p[position] != '.') {
@@ -112,8 +116,7 @@ private:
             else
                 j = 0;
         }
-
-//        cout << endl << "simple:" << p << endl;
+        cout << endl << "simple:" << p << endl;
         return p;
     }
 };
@@ -135,7 +138,7 @@ int main() {
 //            "a",
 //            "",
 //            "fas",
-            "aasdfasdfasdfasdfas"
+            "faadfas"
     };
     string p[] = {
 //            "a",
@@ -152,7 +155,7 @@ int main() {
 //            ".*..a*",
 //            ".*",
 //            "f.*s",
-            "aasdf.*asdf.*asdf.*asdf.*s"
+            "f.*aadf.*s"
     };
     for (int i = 0; i < size(s); i++) {
         cout << i + 1 << " :  " << solution.isMatch(s[i], p[i]) << endl;
