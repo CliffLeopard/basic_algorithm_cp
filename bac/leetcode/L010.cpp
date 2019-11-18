@@ -4,169 +4,217 @@
  * time:04:18
  * email:precipiceleopard@gmail.com
  * link:https://leetcode.com/problems/regular-expression-matching/
+ *
+ * 典型可以通过动态规划解决的问题
+ * 如果用dp[i][j] 表示s[0,i] p[0,j]闭区间内的匹配状况
+ *
+ * p[j] !='*'
+ *    dp[i][j] = dp[i- 1][j-1] && (s[i] == p[j] || p[j] == '.');
+ * p[j] =='*'
+ *      1. dp[i][j] = dp[i][j-2]                                               *代表0次
+ *         比如s=abc p = ad*bc     p[j] == '*' 时，*代表0次，相当于消掉d*
+ *              dp[0][0]=true;
+ *              dp[0][1]=false;
+ *              dp[1][0]=false;
+ *         i=1;j=2 时，p[j] == '*'
+ *              dp[1][2] = dp[1][0] = false;
+ *         i=2;j=2 时，p[j] == '*'
+ *              dp[2][2] = dp[2][0] = false;
+ *      2. dp[i][j] = dp[i-1][j] && (s[i] == p[j-1] || p[j-1] == '.')          *代表一次或者多次
+ *          比如 s1 = abbc  p1 =  ab*c  i=2 j=2 dp[2][2] = dp[1][2] && (...)
+ *          比如 s1 = abec  p1 =  ab*c  i=2 j=2 dp[2][2] = dp[1][2] && (...)
+ *
+ *两种情况只要其中一种成立则dp[i][j] = true;
+ *
+ * 但是
+ *   涉及到0初始化问题，我们使用dp[i][j]表示 s[0,i), p[0,j) 左闭右开区间内的匹配情况。则发生变化
+ *  dp[0][0] = true;
+ * p[j-1] !='*'
+ *    dp[i][j] = dp[i- 1][j-1] && (s[i-1] == p[j-1] || p[j-1] == '.');
+ * p[j-1] =='*'
+ *      1. dp[i][j] = dp[i][j-2]                                                 *代表0次
+ *      2. dp[i][j] = dp[i-1][j] && (s[i-1] == p[j-2] || p[j-2] == '.')          *代表一次或者多次
  */
+
 
 #include <iostream>
 #include <string>
+#include<vector>
 
 using namespace std;
 
 class Solution {
 public:
     bool isMatch(string s, string p) {
-
-        p = simplify(p, s);
-
-        unsigned long s_length = s.length(), p_length = p.length();
-        unsigned long fist_position = 0;
-        unsigned long position;
-
-        if (p_length > 0 && (p[0] == '*' || p.rfind("**") != string::npos))
-            return false;
-
-        if (s_length == 0) {
-            if (p_length == 0)
-                return true;
-            int pt = p.find_first_not_of('*');
-            while (pt != string::npos) {
-                if (pt == p_length - 1 || p[pt + 1] != '*')
-                    return false;
-                pt = p.find_first_not_of('*', pt + 1);
-            }
-            return true;
-        }
-
-        while (true) {
-            position = min(p.find_first_of(s[0], fist_position), p.find_first_of('.', fist_position));
-            if (position == string::npos)
-                return false;
-            else {
-                fist_position = position + 1;
-                if (!isPatternEmpty(p.substr(0, position)))
-                    return false;
-            }
-            if (p[position] != '*')
-                position++;
-            unsigned long i = 1;
-            for (i; i < s_length && position < p_length; i++) {
-                if (p[position] == '*') {
-                    if (p[position - 1] != s[i]) { //&& p[position - 1] != '.'
-                        if (p[position - 1] != '.') {
-                            i--;
-                        } else {
-                            i -= 2;
-                        }
-                        position++;
-                    }
+        int m = s.size(), n = p.size();
+        vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false));
+        dp[0][0] = true;
+        for (int i = 0; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (p[j - 1] == '*') {
+                    dp[i][j] = (j > 1 && dp[i][j - 2]) ||
+                               (i && j > 1 && dp[i - 1][j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.'));
                 } else {
-                    if (p[position] != s[i] && p[position] != '.') {
-                        if (position + 1 < p_length && p[position + 1] == '*') {
-                            position += 2;
-                            i--;
-                        } else {
-                            break;
-                        }
-                    } else if (p[position] != '*')
-                        position++;
+                    dp[i][j] = i && dp[i - 1][j - 1] && (s[i - 1] == p[j - 1] || p[j - 1] == '.');
                 }
             }
-            if (i == s_length) {
-                if (position >= p_length || isPatternEmpty(p.substr(position, p_length - position)))
-                    return true;
-            }
         }
+        return dp[m][n];
     }
+};
 
-private:
-    bool isPatternEmpty(string p) {
-        if (p.empty())
-            return true;
-        if (p[p.length() - 1] != '*')
-            return false;
-        for (int i = 0; i < p.length() - 1; i++) {
-            if (p[i] != '*' && p[i + 1] != '*')
-                return false;
+class Solution2 {
+public:
+    bool isMatch(string s, string p) {
+        int m = s.size(), n = p.size();
+        vector<bool> pre(n + 1, false), cur(n + 1, false);
+        cur[0] = true;
+        for (int i = 0; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (p[j - 1] == '*') {
+                    cur[j] = cur[j - 2] || (i && pre[j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.'));
+                } else {
+                    cur[j] = i && pre[j - 1] && (s[i - 1] == p[j - 1] || p[j - 1] == '.');
+                }
+            }
+            fill(pre.begin(), pre.end(), false);
+            swap(pre, cur);
         }
-        return true;
+        return pre[n];
     }
+};
 
-    string simplify(string p, string &s) {
-        int n = p.length();
-        string temp = p;
-        if (n <= 1) return p;
-        int j = 0;
-        while (j < n && n > 0) {
-            bool flag = true;
-            if (j + 1 < n && p[j] != '.' && s.find(p[j]) == string::npos && p[j + 1] == '*') {
-                p.erase(j, 2);
-                n -= 2;
-                flag = false;
+
+/**
+ * 仔细观察程序
+ *     对于s的向前判断只到i-1,则cur[j]在没有被再次赋值之前，存储的便是i=i-1时cur[j]的值。
+ *     则发现不需要二维数组这么大的空间，因为状态转移的时候涉及到了极少的变量。
+ *     只需要观察匹配字符光标的移动即可，
+ */
+class Solution3 {
+public:
+    bool isMatch(string s, string p) {
+        int m = s.size(), n = p.size();
+        vector<bool> cur(n + 1, false);
+        for (int i = 0; i <= m; i++) {
+            bool pre = cur[0];
+            cur[0] = !i;
+            for (int j = 1; j <= n; j++) {
+                bool temp = cur[j];
+                if (p[j - 1] == '*') {
+                    cur[j] = cur[j - 2] || (i && cur[j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.'));
+                } else {
+                    cur[j] = i && pre && (s[i - 1] == p[j - 1] || p[j - 1] == '.');
+                }
+                pre = temp;
             }
-            if (j >= 2 && p[j] != '.' && p[j - 1] == '*' && p[j] == p[j - 2]) {
-                p.erase(j, 1);
-                n--;
-                flag = false;
-            }
-            if (j + 2 < n && p[j] != '.' && p[j] == p[j + 1] && p[j + 2] == '*') {
-                p.erase(j, 1);
-                flag = false;
-            }
-            if (flag)
-                j++;
-            else
-                j = 0;
         }
-        cout << endl << "simple:" << p << endl;
-        return p;
+        return cur[n];
+    }
+};
+
+class Solution0 {
+public:
+    bool isMatch(string s, string p) {
+        int s_len = s.length(), p_len = p.length();
+        bool **match = new bool *[s_len + 1];
+        for (int i = 0; i <= s_len; i++) {
+            match[i] = new bool[p_len + 1]{false};
+        }
+        match[0][0] = true;
+        for (int i = 0; i <= s_len; i++) {
+            for (int j = 1; j <= p_len; j++) {
+                if (p[j - 1] == '*') {
+                    match[i][j] = (j > 1 && match[i][j - 2]) ||
+                                  (i && j > 1 && match[i - 1][j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.'));
+                } else {
+                    match[i][j] = i && match[i - 1][j - 1] && (
+                            p[j - 1] == s[i - 1] || p[j - 1] == '.'
+                    );
+                }
+            }
+        }
+        return match[s_len][p_len];
     }
 };
 
 int main() {
-    Solution solution;
+
     string s[] = {
-//            "aa",
-//            "aa",
-//            "ab",
-//            "aab",
-//            "mississippi",
-//            "aab",
-//            "aaa",
-//            "aaa",
-//            "aaa",
-//            "aaa",
-//            "ab",
-//            "a",
-//            "",
-//            "fas",
-            "faadfas"
+            "a",
+            "aa",
+            "aa",
+            "ab",
+            "mississippi",
+            "aaa",
+            "aaa",
+            "aaa",
+            "aaa",
+            "ab",
+            "a",
+            "",
+            "aab",
+            "abc",
+            "fas",
+            "faadfas",
+            "ab",
+            "aaba",
+            "aasdfasdfasdfasdfas",
+            "abcdede",
+            "",
+            "ac"
     };
     string p[] = {
-//            "a",
-//            "a*",
-//            ".b",
-//            "c*a*b",
-//            "mis*is*ip*.",
-//            "c*aab*",
-//            "a*a",
-//            "ac*b*a*",
-//            "ab*a",
-//            "ab*a*c*a",
-//            ".*",
-//            ".*..a*",
-//            ".*",
-//            "f.*s",
-            "f.*aadf.*s"
+            "a",
+            "a",
+            "a*",
+            ".b",
+            "mis*is*ip*.",
+            "a*a",
+            "ac*b*a*",
+            "ab*a",
+            "ab*a*c*a",
+            ".*",
+            ".*.a*",
+            ".*",
+            "c*aab*",
+            ".*.",
+            "f.*s",
+            "f.*aadf.*s",
+            ".*c",
+            "ab*a*c*a",
+            "aasdf.*asdf.*asdf.*asdf.*s",
+            "ab.*de",
+            "",
+            "*b"
     };
+    bool result[] = {
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1
+    };
+    Solution0 solution;
     for (int i = 0; i < size(s); i++) {
-        cout << i + 1 << " :  " << solution.isMatch(s[i], p[i]) << endl;
+//        cout <<solution.isMatch(s[i], p[i])<<","<< endl;
+        cout << i + 1 << ":" << (solution.isMatch(s[i], p[i]) == result[i]) << endl;
     }
-
-//    string s = "";
-//    string p1 = "c";
-//    string p2 = "abc*";
-//    cout << string::npos << endl;
-//    cout << p2.find_first_of("b", 1) << endl;
-
-
     return 0;
 }
