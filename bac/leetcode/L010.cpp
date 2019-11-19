@@ -102,7 +102,7 @@ public:
             for (int j = 1; j <= n; j++) {
                 bool temp = cur[j];
                 if (p[j - 1] == '*') {
-                    cur[j] = cur[j - 2] || (i && cur[j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.'));
+                    cur[j] = j>2 && (cur[j - 2] || (i && cur[j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.')));
                 } else {
                     cur[j] = i && pre && (s[i - 1] == p[j - 1] || p[j - 1] == '.');
                 }

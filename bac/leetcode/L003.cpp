@@ -13,7 +13,10 @@ using namespace std;
 /**
  * 难度:简单
  * 最大不循环子串问题
- * 窗口滑动问题，找到最大不循环子串的开始和结指针
+ * 窗口滑动问题，找到最大不循环子串的开始和结束指针
+ * sp从0开始，ep从1开始，寻找[sp,ep)范围内与s[ep]相同的字符
+ *   如果没找到，则显然以sp为起点的字串加一。
+ *   否则以sp为起点不循环子串终结。比较并记录length。sp移动到找到的相同位置，继续进行ep指针下游。
  */
 class Solution {
 public:
@@ -40,6 +43,6 @@ public:
 
 int main() {
     Solution solution;
-    cout << solution.lengthOfLongestSubstring("abcabccbae");
+    cout << solution.lengthOfLongestSubstring("abcecbccbae");
     return 0;
 }
