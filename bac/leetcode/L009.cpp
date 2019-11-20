@@ -12,6 +12,7 @@ using namespace std;
 
 /**
  * 此方法12ms
+ * 算出长度，折半计算
  */
 class Solution {
 public:
@@ -44,6 +45,7 @@ public:
 
 /**
  * 此方法8ms
+ * 构造新的int temp,从右至左迭代x中的每一位，使temp为当前长度的回文，判断temp和x的大小
  */
 class Solution2 {
 public:
