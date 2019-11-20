@@ -8,6 +8,7 @@
  * 简单，细节很重要
  * 1.空字符串
  * 2.0开头
+ * 3.string的最大长度需用unsigned long表示
  */
 
 #include <iostream>
