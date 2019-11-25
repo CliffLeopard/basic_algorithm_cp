@@ -3,7 +3,8 @@
  * date:2019/11/21  
  * time:18:35
  * email:precipiceleopard@gmail.com
- * link:
+ * link:https://leetcode.com/problems/merge-two-sorted-lists/
+ *  简单的链表操作
  */
 
 #include <iostream>
