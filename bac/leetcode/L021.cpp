@@ -44,7 +44,6 @@ public:
         if (l1 == NULL) return l2;
         if (l2 == NULL) return l1;
 
-
         if (l2->val < l1->val) {
             ListNode *temp0 = l1;
             l1 = l2;
