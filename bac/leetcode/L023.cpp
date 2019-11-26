@@ -36,6 +36,69 @@ struct ListNode {
 };
 
 /**
+ * 使用分治算法
+ * 直接捞过来21的两个链表合并，之后两两合并，直到一个。
+ * 4ms 92%
+ */
+#include <queue>
+
+class Solution2 {
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+        queue<ListNode *> list_queue;
+        vector<ListNode *>::iterator iter1 = lists.begin();
+        while (iter1 != lists.end()) {
+            if (*iter1 != NULL)
+                list_queue.push(*iter1);
+            iter1++;
+        }
+
+        if (list_queue.empty())
+            return NULL;
+        while (list_queue.size() > 1) {
+            ListNode *node1 = list_queue.front();
+            list_queue.pop();
+            ListNode *node2 = list_queue.front();
+            list_queue.pop();
+            list_queue.push(mergeTwoLists(node1, node2));
+        }
+        return list_queue.front();
+    }
+
+private:
+    ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+        if (l1 == NULL) return l2;
+        if (l2 == NULL) return l1;
+
+        if (l2->val < l1->val) {
+            ListNode *temp0 = l1;
+            l1 = l2;
+            l2 = temp0;
+        }
+        ListNode *head = l1;
+
+        while (true) {
+            if (l1->next == NULL) {
+                l1->next = l2;
+                break;
+            }
+
+            if (l2->val < l1->next->val) {
+                ListNode *temp1 = l1->next;
+                l1->next = l2;
+                l2 = temp1;
+                if (l2 == NULL)
+                    break;
+            } else {
+                l1 = l1->next;
+            }
+
+        }
+        return head;
+    }
+};
+
+/**
  * 这种算法理论上不慢，但是vector的erase操作确实令人发指，造成速度极慢。576ms打败了7.57%的用户。但是内存消耗打败了98。35%。
  * 时间效率应该是O(kN),k代表单个链表中元素个数。
  */
@@ -105,67 +168,7 @@ public:
     }
 };
 
-/**
- * 使用分治算法
- * 直接捞过来21的两个链表合并，之后两两合并，直到一个。
- */
-#include <queue>
 
-class Solution2 {
-public:
-    ListNode *mergeKLists(vector<ListNode *> &lists) {
-        queue<ListNode *> list_queue;
-        vector<ListNode *>::iterator iter1 = lists.begin();
-        while (iter1 != lists.end()) {
-            if (*iter1 != NULL)
-                list_queue.push(*iter1);
-            iter1++;
-        }
-
-        if (list_queue.empty())
-            return NULL;
-        while (list_queue.size() > 1) {
-            ListNode *node1 = list_queue.front();
-            list_queue.pop();
-            ListNode *node2 = list_queue.front();
-            list_queue.pop();
-            list_queue.push(mergeTwoLists(node1, node2));
-        }
-        return list_queue.front();
-    }
-
-private:
-    ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
-        if (l1 == NULL) return l2;
-        if (l2 == NULL) return l1;
-
-        if (l2->val < l1->val) {
-            ListNode *temp0 = l1;
-            l1 = l2;
-            l2 = temp0;
-        }
-        ListNode *head = l1;
-
-        while (true) {
-            if (l1->next == NULL) {
-                l1->next = l2;
-                break;
-            }
-
-            if (l2->val < l1->next->val) {
-                ListNode *temp1 = l1->next;
-                l1->next = l2;
-                l2 = temp1;
-                if (l2 == NULL)
-                    break;
-            } else {
-                l1 = l1->next;
-            }
-
-        }
-        return head;
-    }
-};
 
 
 int main() {
