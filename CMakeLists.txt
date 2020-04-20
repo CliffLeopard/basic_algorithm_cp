@@ -35,3 +35,16 @@ add_executable(L021 bac/leetcode/L021.cpp)
 add_executable(L022 bac/leetcode/L022.cpp)
 add_executable(L023 bac/leetcode/L023.cpp)
 add_executable(L024 bac/leetcode/L024.cpp)
+add_executable(L025 bac/leetcode/L025.cpp)
+add_executable(L026 bac/leetcode/L026.cpp)
+add_executable(L027 bac/leetcode/L027.cpp)
+add_executable(L028 bac/leetcode/L028.cpp)
+add_executable(L029 bac/leetcode/L029.cpp)
+add_executable(L030 bac/leetcode/L030.cpp)
+add_executable(L146 bac/leetcode/L146.cpp)
+add_executable(L460 bac/leetcode/L460.cpp)
+
+
+
+#严蔚敏版数据结构
+add_executable(KMP bac/ywm/KMP.cpp)
