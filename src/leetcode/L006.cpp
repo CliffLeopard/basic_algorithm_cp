@@ -20,10 +20,10 @@ using namespace std;
 
 class Solution {
 public:
-    string convert(string &s, int numRows) {
+    static string convert(string &s, int numRows) {
         int n = s.length();
         if (n <= numRows || numRows == 1) return s;
-        string result = "";
+        string result;
         int loop = 2 * numRows - 2;
         for (int i = 0; i < numRows; i++) {
             for (int j = i; j < n; j += loop) {
@@ -51,7 +51,7 @@ public:
      * 2 ==> m=(n+r-k2-2)/(2*r-2)  (0<=k2<r-2)
      * 又因为m,n,r,k1,k2都显然为正整数。
      */
-    int getFullLine(string &s, int numRows) {
+    static int getFullLine(string &s, int numRows) {
         int n = s.length();
         int m = 0;
         for (int i = 0; i < numRows; i++) {
@@ -73,7 +73,6 @@ public:
 };
 
 int main() {
-    Solution solution;
     string s[] = {
             "PAYPALISHIRING",
             "PAYPALISHIRING",
@@ -81,7 +80,7 @@ int main() {
     };
     int numRows[] = {3, 4, 5};
     for (int i = 0; i < size(s); i++) {
-        cout << solution.convert(s[i], numRows[i]) << endl;
+        cout << Solution::convert(s[i], numRows[i]) << endl;
     }
     return 0;
 }

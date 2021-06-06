@@ -7,15 +7,15 @@
  */
 
 #include <iostream>
-#include "unordered_map"
 #include "list"
+#include "map"
 
 using namespace std;
 
 class LRUCache {
 
 public:
-    LRUCache(int capacity) {
+    explicit LRUCache(int capacity) {
         this->capacity = capacity;
         this->head = new ListNode();
         this->contain = 0;
@@ -43,7 +43,7 @@ public:
                 }
 
                 ahead->next = head->next;
-                ahead->previous = NULL;
+                ahead->previous = nullptr;
                 head->next->previous = ahead;
                 head->next = ahead;
             }
@@ -76,13 +76,13 @@ public:
                 }
 
                 ahead->next = head->next;
-                ahead->previous = NULL;
+                ahead->previous = nullptr;
                 head->next->previous = ahead;
                 head->next = ahead;
             }
         } else {
             //不存在对应key值，增加一个
-            ListNode *newNode = new ListNode(key, value);
+            auto *newNode = new ListNode(key, value);
             newNode->next = head->next;
             if (head->next)
                 head->next->previous = newNode;
@@ -93,7 +93,7 @@ public:
             if (contain > capacity) {
                 contain--;
                 if (head->previous->previous) {
-                    head->previous->previous->next = NULL;
+                    head->previous->previous->next = nullptr;
                 }
                 head->previous = head->previous->previous;
             }
@@ -102,14 +102,14 @@ public:
 
 private:
     struct ListNode {
-        int key;
-        int value;
+        int key{};
+        int value{};
         ListNode *previous;
         ListNode *next;
 
-        ListNode() : previous(NULL), next(NULL) {}
+        ListNode() : previous(nullptr), next(nullptr) {}
 
-        ListNode(int key, int value) : previous(NULL), next(NULL) {
+        ListNode(int key, int value) : previous(nullptr), next(nullptr) {
             this->key = key;
             this->value = value;
         }
@@ -122,7 +122,7 @@ private:
 
 class LRUCache2 {
 public:
-    LRUCache2(int capacity) {
+    explicit LRUCache2(int capacity) {
         cap = capacity;
     }
 
@@ -130,7 +130,7 @@ public:
         auto iter = myMap.find(key);
         if (iter == myMap.end()) return -1;
 
-        mylist.splice(mylist.begin(), mylist, iter->second);
+        myList.splice(myList.begin(), myList, iter->second);
         return iter->second->second;
     }
 
@@ -138,26 +138,26 @@ public:
         auto iter = myMap.find(key);
         if (iter != myMap.end()) {
             iter->second->second = value;
-            mylist.splice(mylist.begin(), mylist, iter->second);
+            myList.splice(myList.begin(), myList, iter->second);
         } else {
-            mylist.insert(mylist.begin(), make_pair(key, value));
-            myMap[key] = mylist.begin();
+            myList.insert(myList.begin(), make_pair(key, value));
+            myMap[key] = myList.begin();
             if (myMap.size() > cap) {
-                myMap.erase(mylist.rbegin()->first);
-                mylist.pop_back();
+                myMap.erase(myList.rbegin()->first);
+                myList.pop_back();
             }
         }
     }
 
 private:
     int cap;
-    list<pair<int, int>> mylist;
-    unordered_map<int, list<pair<int, int>>::iterator> myMap;
+    list<pair<int, int>> myList;
+    map<int, list<pair<int, int>>::iterator> myMap;
 };
 
 
 int main() {
-    LRUCache cache = LRUCache(1);
+    auto cache = LRUCache(1);
     cache.put(2, 1);
     cout << cache.get(2) << endl;
     cache.put(3, 2);

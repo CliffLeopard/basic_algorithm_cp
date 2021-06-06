@@ -20,7 +20,7 @@ using namespace std;
  */
 class Solution {
 public:
-    int lengthOfLongestSubstring(string s) {
+    static int lengthOfLongestSubstring(string s) {
         if (empty(s))
             return 0;
         else if (size(s) == 1)
@@ -42,7 +42,6 @@ public:
 };
 
 int main() {
-    Solution solution;
-    cout << solution.lengthOfLongestSubstring("abcecbccbae");
+    cout << Solution::lengthOfLongestSubstring("abcecbccbae");
     return 0;
 }

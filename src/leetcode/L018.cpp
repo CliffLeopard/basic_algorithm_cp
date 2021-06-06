@@ -15,7 +15,7 @@ using namespace std;
 
 class Solution {
 public:
-    vector<vector<int>> fourSum(vector<int> &nums, int target) {
+    static vector<vector<int>> fourSum(vector<int> &nums, int target) {
         vector<vector<int>> result;
         int n = nums.size();
         if (n < 4) return result;
@@ -61,8 +61,7 @@ int main() {
             0, 0, 0, 0
     };
 
-    Solution solution;
-    vector<vector<int>> result = solution.fourSum(nums, 0);
+    vector<vector<int>> result = Solution::fourSum(nums, 0);
     for (int i = 0; i < result.size(); i++) {
         for (int j = 0; j < result[i].size(); j++) {
             cout << result[i][j] << "  ";

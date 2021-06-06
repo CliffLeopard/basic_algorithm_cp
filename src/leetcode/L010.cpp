@@ -38,14 +38,13 @@
 
 
 #include <iostream>
-#include <string>
 #include<vector>
 
 using namespace std;
 
 class Solution {
 public:
-    bool isMatch(string s, string p) {
+    static bool isMatch(string s, string p) {
         int m = s.size(), n = p.size();
         vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false));
         dp[0][0] = true;
@@ -65,7 +64,7 @@ public:
 
 class Solution2 {
 public:
-    bool isMatch(string s, string p) {
+    static bool isMatch(string s, string p) {
         int m = s.size(), n = p.size();
         vector<bool> pre(n + 1, false), cur(n + 1, false);
         cur[0] = true;
@@ -93,7 +92,7 @@ public:
  */
 class Solution3 {
 public:
-    bool isMatch(string s, string p) {
+    static bool isMatch(string s, string p) {
         int m = s.size(), n = p.size();
         vector<bool> cur(n + 1, false);
         for (int i = 0; i <= m; i++) {
@@ -102,7 +101,7 @@ public:
             for (int j = 1; j <= n; j++) {
                 bool temp = cur[j];
                 if (p[j - 1] == '*') {
-                    cur[j] = j>2 && (cur[j - 2] || (i && cur[j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.')));
+                    cur[j] = j > 2 && (cur[j - 2] || (i && cur[j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.')));
                 } else {
                     cur[j] = i && pre && (s[i - 1] == p[j - 1] || p[j - 1] == '.');
                 }
@@ -115,7 +114,7 @@ public:
 
 class Solution0 {
 public:
-    bool isMatch(string s, string p) {
+    static bool isMatch(string s, string p) {
         int s_len = s.length(), p_len = p.length();
         bool **match = new bool *[s_len + 1];
         for (int i = 0; i <= s_len; i++) {
@@ -189,32 +188,31 @@ int main() {
             "*b"
     };
     bool result[] = {
-            1,
-            0,
-            1,
-            1,
-            1,
-            1,
-            1,
-            0,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            1,
-            1
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            false,
+            false,
+            true,
+            true,
+            true
     };
-    Solution0 solution;
+
     for (int i = 0; i < size(s); i++) {
-//        cout <<solution.isMatch(s[i], p[i])<<","<< endl;
-        cout << i + 1 << ":" << (solution.isMatch(s[i], p[i]) == result[i]) << endl;
+        cout << i + 1 << ":" << (Solution0::isMatch(s[i], p[i]) == result[i]) << endl;
     }
     return 0;
 }

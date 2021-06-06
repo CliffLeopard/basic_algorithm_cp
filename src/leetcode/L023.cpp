@@ -14,20 +14,20 @@ struct ListNode {
     int val;
     ListNode *next;
 
-    ListNode(int x) : val(x), next(NULL) {}
+    explicit ListNode(int x) : val(x), next(nullptr) {}
 
     void addNode(int x) {
         ListNode *head = this;
-        while (head->next != NULL) {
+        while (head->next != nullptr) {
             head = head->next;
         }
-        ListNode *node = new ListNode(x);
+        auto *node = new ListNode(x);
         head->next = node;
     }
 
     void travel() {
         ListNode *head = this;
-        while (head != NULL) {
+        while (head != nullptr) {
             cout << head->val << "-->";
             head = head->next;
         }
@@ -44,17 +44,17 @@ struct ListNode {
 
 class Solution2 {
 public:
-    ListNode *mergeKLists(vector<ListNode *> &lists) {
+    static ListNode *mergeKLists(vector<ListNode *> &lists) {
         queue<ListNode *> list_queue;
-        vector<ListNode *>::iterator iter1 = lists.begin();
+        auto iter1 = lists.begin();
         while (iter1 != lists.end()) {
-            if (*iter1 != NULL)
+            if (*iter1 != nullptr)
                 list_queue.push(*iter1);
             iter1++;
         }
 
         if (list_queue.empty())
-            return NULL;
+            return nullptr;
         while (list_queue.size() > 1) {
             ListNode *node1 = list_queue.front();
             list_queue.pop();
@@ -66,9 +66,9 @@ public:
     }
 
 private:
-    ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
-        if (l1 == NULL) return l2;
-        if (l2 == NULL) return l1;
+    static ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+        if (l1 == nullptr) return l2;
+        if (l2 == nullptr) return l1;
 
         if (l2->val < l1->val) {
             ListNode *temp0 = l1;
@@ -78,7 +78,7 @@ private:
         ListNode *head = l1;
 
         while (true) {
-            if (l1->next == NULL) {
+            if (l1->next == nullptr) {
                 l1->next = l2;
                 break;
             }
@@ -87,7 +87,7 @@ private:
                 ListNode *temp1 = l1->next;
                 l1->next = l2;
                 l2 = temp1;
-                if (l2 == NULL)
+                if (l2 == nullptr)
                     break;
             } else {
                 l1 = l1->next;
@@ -104,12 +104,11 @@ private:
  */
 class Solution {
 public:
-    ListNode *mergeKLists(vector<ListNode *> &lists) {
+    static ListNode *mergeKLists(vector<ListNode *> &lists) {
         ListNode *result;
-
-        vector<ListNode *>::iterator iter1 = lists.begin();
+        auto iter1 = lists.begin();
         while (iter1 != lists.end()) {
-            if (*iter1 != NULL) {
+            if (*iter1 != nullptr) {
                 iter1++;
             } else {
                 *iter1 = *(lists.end() - 1);
@@ -117,14 +116,13 @@ public:
             }
         }
 
-        if (lists.size() == 0)
-            return NULL;
+        if (lists.empty())
+            return nullptr;
         if (lists.size() == 1)
             return lists[0];
 
-        int n = lists.size();
-        vector<ListNode *>::iterator iter2 = lists.begin() + 1;
-        for (iter2; iter2 != lists.end(); iter2++) {
+        auto iter2 = lists.begin() + 1;
+        for (; iter2 != lists.end(); iter2++) {
             if ((*iter2)->val < lists[0]->val) {
                 ListNode *temp = lists[0];
                 lists[0] = *iter2;
@@ -133,7 +131,7 @@ public:
         }
 
         result = lists[0];
-        if (lists[0]->next == NULL) {
+        if (lists[0]->next == nullptr) {
             lists[0]->next = lists[1];
 
             *(lists.begin() + 1) = *(lists.end() - 1);
@@ -141,9 +139,9 @@ public:
         }
 
         while (lists.size() > 1) {
-            vector<ListNode *>::iterator iterator1 = lists.begin() + 1;
+            auto iterator1 = lists.begin() + 1;
             while (iterator1 != lists.end()) {
-                if (*iterator1 != NULL) {
+                if (*iterator1 != nullptr) {
                     if ((*iterator1)->val < lists[0]->next->val) {
                         ListNode *temp = lists[0]->next;
                         lists[0]->next = *iterator1;
@@ -158,7 +156,7 @@ public:
             lists[0] = lists[0]->next;
             if (lists.size() == 1)
                 break;
-            if (lists[0]->next == NULL) {
+            if (lists[0]->next == nullptr) {
                 lists[0]->next = lists[1];
                 *(lists.begin() + 1) = *(lists.end() - 1);
                 lists.pop_back();
@@ -173,10 +171,10 @@ public:
 
 int main() {
 
-    ListNode *A = new ListNode(1);
-    ListNode *B = new ListNode(1);
-    ListNode *C = new ListNode(2);
-    ListNode *D = new ListNode(0);
+    auto *A = new ListNode(1);
+    auto *B = new ListNode(1);
+    auto *C = new ListNode(2);
+    auto *D = new ListNode(0);
 
     A->addNode(4);
     A->addNode(5);
@@ -193,12 +191,11 @@ int main() {
     vector<ListNode *> lists;
     lists.push_back(A);
     lists.push_back(B);
-    lists.push_back(NULL);
+    lists.push_back(nullptr);
     lists.push_back(C);
     lists.push_back(D);
 
-    Solution2 solution;
-    ListNode *result = solution.mergeKLists(lists);
+    ListNode *result = Solution2::mergeKLists(lists);
     result->travel();
     return 0;
 }

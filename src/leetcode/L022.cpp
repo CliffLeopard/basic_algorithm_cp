@@ -11,7 +11,6 @@
  */
 #include <iostream>
 #include <vector>
-#include <string>
 
 using namespace std;
 
@@ -30,7 +29,7 @@ private:
     void generate(vector<string> &result, char *element, int n, int left, int right) {
         if (left == n && right == n) {
 //           这里特别shit,leetCode不支持char* 转string的构造函数。
-            string res = "";
+            string res;
             for (int i = 0; i < 2 * n; i++) {
                 res.push_back(element[i]);
             }

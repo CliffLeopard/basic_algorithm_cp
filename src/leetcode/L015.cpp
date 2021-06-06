@@ -21,7 +21,7 @@ using namespace std;
 
 class Solution {
 public:
-    vector<vector<int>> threeSum(vector<int> &nums) {
+    static vector<vector<int>> threeSum(vector<int> &nums) {
         int n = nums.size();
         vector<vector<int>> result;
         if (n < 3)
@@ -62,8 +62,7 @@ int main() {
 //    vector<int> nums = {3, 0, -2, -1, 1, 2};
 //    vector<int> nums = {-1, 0, 1, 2, -1, -4};
     vector<int> nums = {1, 1, -2};
-    Solution solution;
-    vector<vector<int>> result = solution.threeSum(nums);
+    vector<vector<int>> result = Solution::threeSum(nums);
 
     vector<vector<int>>::iterator it;
     for (it = result.begin(); it != result.end(); it++) {

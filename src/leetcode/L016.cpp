@@ -17,7 +17,7 @@ using namespace std;
  */
 class Solution {
 public:
-    int threeSumClosest(vector<int> &nums, int target) {
+    static int threeSumClosest(vector<int> &nums, int target) {
         int min = INT32_MAX;
         sort(nums.begin(), nums.end());
         int n = nums.size();
@@ -46,8 +46,7 @@ public:
 };
 
 int main() {
-    Solution solution;
     vector<int> nums = {-1, 2, 1, -4};
     int target = 1;
-    cout << solution.threeSumClosest(nums, target) << endl;
+    cout << Solution::threeSumClosest(nums, target) << endl;
 }

@@ -16,7 +16,7 @@ using namespace std;
  */
 class Solution {
 public:
-    int removeDuplicates(vector<int> &nums) {
+    static int removeDuplicates(vector<int> &nums) {
         int n = nums.size();
         if (n == 0 || n == 1)
             return n;
@@ -35,7 +35,7 @@ public:
  */
 class Solution2 {
 public:
-    int removeDuplicates(vector<int> &nums) {
+    static int removeDuplicates(vector<int> &nums) {
         int n = nums.size();
         if (n == 0 || n == 1)
             return n;
@@ -66,9 +66,8 @@ public:
 
 int main() {
     vector<int> input = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
-    Solution solution;
-    int result = solution.removeDuplicates(input);
-    vector<int>::iterator iter = input.begin();
+    int result = Solution::removeDuplicates(input);
+    auto iter = input.begin();
     cout << "result:" << result << endl;
     while (iter != input.end()) {
         cout << *iter << " ";

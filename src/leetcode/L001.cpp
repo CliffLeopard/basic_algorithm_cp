@@ -17,7 +17,7 @@ using namespace std;
  */
 class Solution {
 public:
-    vector<int> twoSum(vector<int> &nums, int target) {
+    static vector<int> twoSum(vector<int> &nums, int target) {
         vector<int> result(2);
         int len = nums.size();
         int i = 0;
@@ -38,7 +38,6 @@ public:
 };
 
 int main() {
-    Solution solution;
     vector<int> nums(4);
     nums[0] = 2;
     nums[1] = 7;
@@ -46,7 +45,7 @@ int main() {
     nums[3] = 15;
     int target = 26;
 
-    vector result = solution.twoSum(nums, target);
+    vector result = Solution::twoSum(nums, target);
     cout << result[0] << "  " << result[1] << endl;
     return 0;
 }

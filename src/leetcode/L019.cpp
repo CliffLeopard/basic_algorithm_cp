@@ -14,16 +14,16 @@ struct ListNode {
     int val;
     ListNode *next;
 
-    ListNode(int x) : val(x), next(NULL) {}
+    explicit ListNode(int x) : val(x), next(nullptr) {}
 
     void addNode(int x) {
         ListNode *tail = this;
-        while (tail->next != NULL)
+        while (tail->next != nullptr)
             tail = tail->next;
         tail->next = new ListNode(x);
     }
 
-    void travel() {
+    void travel() const {
         cout << val << " ";
         ListNode *pn = next;
         while (pn) {
@@ -40,12 +40,12 @@ struct ListNode {
  */
 class Solution {
 public:
-    ListNode *removeNthFromEnd(ListNode *head, int n) {
-        if (!head) return NULL;
+    static ListNode *removeNthFromEnd(ListNode *head, int n) {
+        if (!head) return nullptr;
         ListNode *left = head;
         ListNode *right = head;
         int i = 0;
-        while (right != NULL) {
+        while (right != nullptr) {
             right = right->next;
             if (i < n + 1) {
                 i++;
@@ -65,12 +65,12 @@ public:
  */
 class Solution2 {
 public:
-    ListNode *removeNthFromEnd(ListNode *head, int n) {
+    static ListNode *removeNthFromEnd(ListNode *head, int n) {
         if (!head)
-            return NULL;
+            return nullptr;
         ListNode *ahead = head;
         int sum = 0;
-        while (ahead != NULL) {
+        while (ahead != nullptr) {
             sum++;
             ahead = ahead->next;
         }
@@ -88,13 +88,12 @@ public:
 };
 
 int main() {
-    Solution solution;
-    ListNode *head = new ListNode(1);
+    auto *head = new ListNode(1);
     head->addNode(2);
     head->addNode(3);
     head->addNode(4);
 //    head->addNode(5);
     head->travel();
-    ListNode *node = solution.removeNthFromEnd(head, 4);
+    ListNode *node = Solution::removeNthFromEnd(head, 4);
     node->travel();
 }

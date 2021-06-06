@@ -14,14 +14,14 @@ struct ListNode {
     int val;
     ListNode *next;
 
-    ListNode(int x) : val(x), next(NULL) {}
+    explicit ListNode(int x) : val(x), next(nullptr) {}
 
     void add(int x) {
         ListNode *head = this;
         while (head->next) {
             head = head->next;
         }
-        ListNode *new_node = new ListNode(x);
+        auto *new_node = new ListNode(x);
         head->next = new_node;
     }
 
@@ -37,12 +37,12 @@ struct ListNode {
 
 class Solution {
 public:
-    ListNode *swapPairs(ListNode *head) {
-        ListNode *head_cur = new ListNode(-1);
+    static ListNode *swapPairs(ListNode *head) {
+        auto *head_cur = new ListNode(-1);
         ListNode *result = head_cur;
         ListNode *temp;
         head_cur->next = head;
-        if (!head || head->next == NULL)
+        if (!head || head->next == nullptr)
             return head;
         while (head && head->next) {
             temp = head->next->next;
@@ -58,14 +58,13 @@ public:
 };
 
 int main() {
-    ListNode *input = new ListNode(1);
+    auto *input = new ListNode(1);
     input->add(2);
     input->add(3);
     input->add(4);
     input->add(5);
     input->add(6);
     input->travel();
-    Solution solution;
-    ListNode *result = solution.swapPairs(input);
+    ListNode *result = Solution::swapPairs(input);
     result->travel();
 }

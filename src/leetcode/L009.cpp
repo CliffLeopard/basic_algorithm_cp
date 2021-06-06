@@ -16,7 +16,7 @@ using namespace std;
  */
 class Solution {
 public:
-    bool isPalindrome(int x) {
+    static bool isPalindrome(int x) {
         if (x < 0)
             return false;
         if (x < 10)
@@ -49,7 +49,7 @@ public:
  */
 class Solution2 {
 public:
-    bool isPalindrome(int x) {
+    static bool isPalindrome(int x) {
         if (x < 0)
             return false;
         if (x < 10)
@@ -80,8 +80,7 @@ int main() {
             123321,
             10101
     };
-    Solution2 solution;
-    for (int i = 0; i < size(input); i++)
-        cout << solution.isPalindrome(input[i]) << endl;
+    for (int i : input)
+        cout << Solution2::isPalindrome(i) << endl;
     return 0;
 }

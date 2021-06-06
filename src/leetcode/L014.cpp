@@ -16,10 +16,10 @@ using namespace std;
  */
 class Solution {
 public:
-    string longestCommonPrefix(vector<string> &strs) {
-        string result = "";
+    static string longestCommonPrefix(vector<string> &strs) {
+        string result;
         int n = strs.size();
-        if (strs.size() == 0)
+        if (strs.empty())
             return result;
         for (int i = 0; i < strs[0].length(); i++) {
             for (int j = 1; j < n; j++) {
@@ -37,9 +37,9 @@ public:
  */
 class Solution2 {
 public:
-    string longestCommonPrefix(vector<string> &strs) {
+    static string longestCommonPrefix(vector<string> &strs) {
         int n = strs.size();
-        string result = "";
+        string result;
         if (n == 0)
             return result;
         if (n == 1)
@@ -59,12 +59,11 @@ public:
 };
 
 int main() {
-    Solution2 solution;
     vector<string> vec = {"flower","flow","flight"};
     sort(vec.begin(), vec.end());
     vector<string>::iterator iterator;
 //    for (iterator = vec.begin(); iterator != vec.end(); iterator++)
 //        cout << *iterator << "  ";
 //    cout << endl;
-    cout << solution.longestCommonPrefix(vec) << endl;
+    cout << Solution2::longestCommonPrefix(vec) << endl;
 }

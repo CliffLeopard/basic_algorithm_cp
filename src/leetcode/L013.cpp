@@ -103,7 +103,7 @@ int main() {
             "MDXXXI"
     };
     Solution solution;
-    for (int i = 0; i < size(input); i++)
-        cout << solution.romanToInt(input[i]) << endl;
+    for (auto & i : input)
+        cout << solution.romanToInt(i) << endl;
     return 0;
 }

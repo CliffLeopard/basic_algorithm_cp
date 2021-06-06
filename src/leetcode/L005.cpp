@@ -27,9 +27,12 @@ using namespace std;
  *    什么是局部最大回文串的中心呢？ 设中心p,回文半径length。即p+length的范围内的p'的回文半径如果小于<length,则以p为中心的回文串就是局部最大的了。
  *    为了构造这种中心对称的回文性，Manacher算法首先将双回文串的情况改造为但回文串。这种思想也可以用在算法1中。避免了两种情况的判断。但是内存会增大。
  */
+
+#define MAX  1001
+bool dp[MAX][MAX];
 class Solution {
 public:
-    string longestPalindrome(string s) {
+    static string longestPalindrome(const string& s) {
         string result1, result2, result3, result4;
         result1 = centerTraverse(s);
         result2 = DP(s);
@@ -40,7 +43,7 @@ public:
     }
 
 private:
-    string centerTraverse(string s) {
+    static string centerTraverse(string s) {
 
         int n = s.length();
         int maxlength = 1, length = 1;
@@ -87,10 +90,7 @@ private:
         return s.substr(start, maxlength);
     }
 
-#define MAX  1001
-    bool dp[MAX][MAX];
-
-    string DP(string s) {
+    static string DP(string s) {
         int n = s.length();
         if (n < 1) return "";
         dp[n - 1][n - 1] = true;
@@ -141,14 +141,14 @@ private:
      *    情况如3.
      *
      */
-    string manacher(string s) {
+    static string manacher(string s) {
         int n = s.length();
         if (n == 0) return "";
         if (n == 1) return s;
 
         int start = 0, maxlength = 1;
-        int i = 0;
-        int mostRight = 0, mostC = 0, lp = 0, lc = 0;
+        int i;
+        int mostRight = 0, mostC = 0, lp, lc = 0;
         char *newStr = new char[2 * n + 1];
         int *lengths = new int[2 * n + 1];
         newStr[0] = '#';
@@ -187,10 +187,10 @@ private:
         return s.substr(start / 2, maxlength / 2);
     }
 
-    string centerTravelManacher(string s) {
+    static string centerTravelManacher(string s) {
         int n = s.length();
         int maxlength = 0, center = 0, start = 0;
-        int right = 0, rcenter = 0, rcl = 0, sp = 0;
+        int right = 0, rcenter = 0, rcl = 0, sp;
         int *length = new int[n];
         string result;
 
@@ -242,7 +242,7 @@ private:
             }
             center++;
         }
-        return s.substr(start, maxlength);;
+        return s.substr(start, maxlength);
     }
 };
 
@@ -254,9 +254,8 @@ int main() {
             "abacab",
             "babadada"
     };
-    Solution solution;
-    for (int i = 0; i < size(s); i++) {
-        solution.longestPalindrome(s[i]);
+    for (const auto & i : s) {
+        Solution::longestPalindrome(i);
         cout << endl;
     }
     return 0;

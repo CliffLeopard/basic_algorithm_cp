@@ -18,7 +18,7 @@ using namespace std;
 
 class Solution {
 public:
-    int myAtoi(string str) {
+    static int myAtoi(string str) {
         if (str.empty()) return 0;
         int n = str.length();
         int begin = -1;
@@ -75,7 +75,7 @@ public:
     }
 
 private:
-    bool isNum(char ch) {
+    static bool isNum(char ch) {
         if (ch - '0' >= 0 && ch - '9' <= 0)
             return true;
         else
@@ -100,9 +100,8 @@ int main() {
             "-10",
             "1095502006p8"
     };
-    Solution solution;
-    for (int i = 0; i < size(input); i++)
-        cout << solution.myAtoi(input[i]) << endl;
+    for (auto & i : input)
+        cout << Solution::myAtoi(i) << endl;
     return 0;
 }
 

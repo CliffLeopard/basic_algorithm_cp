@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <vector>
-#include <math.h>
+#include <cmath>
 
 using namespace std;
 
@@ -18,7 +18,7 @@ using namespace std;
  */
 class Solution {
 public:
-    double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
+    static double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
         int n = nums1.size();
         int m = nums2.size();
         bool flag = (n + m) % 2 == 0;
@@ -65,7 +65,6 @@ public:
 };
 
 int main() {
-    Solution solution;
     vector<int> nums1 = vector<int>(1);
     vector<int> nums2 = vector<int>(1);
     nums1[0] = 100001;
@@ -73,7 +72,7 @@ int main() {
     nums2[0] = 100000;
 //    nums2[1] = 4;
 
-    cout << solution.findMedianSortedArrays(nums1, nums2);
+    cout << Solution::findMedianSortedArrays(nums1, nums2);
     return 0;
 }
 

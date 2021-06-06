@@ -18,27 +18,27 @@ struct ListNode {
     int val;
     ListNode *next;
 
-    ListNode(int x) : val(x), next(NULL) {
+    explicit ListNode(int x) : val(x), next(nullptr) {
 
     }
 
     void add(int x) {
-        ListNode *node = new ListNode(x);
+        auto *node = new ListNode(x);
         ListNode *tail = next;
-        if (tail == NULL) {
+        if (tail == nullptr) {
             next = node;
         } else {
-            while (tail->next != NULL) {
+            while (tail->next != nullptr) {
                 tail = tail->next;
             }
             tail->next = node;
         }
     }
 
-    void print() {
+    void print() const {
         cout << val << "  ";
         ListNode *node = next;
-        while (node != NULL) {
+        while (node != nullptr) {
             cout << node->val << "  ";
             node = node->next;
         }
@@ -47,23 +47,23 @@ struct ListNode {
 
 class Solution {
 public:
-    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+    static ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
         int temp = 0;
-        ListNode *head = new ListNode(-1);
-        ListNode *tail = new ListNode(-1);
+        auto *head = new ListNode(-1);
+        auto *tail = new ListNode(-1);
         head->next = tail;
-        while (l1 != NULL || l2 != NULL) {
+        while (l1 != nullptr || l2 != nullptr) {
             int sum = temp;
-            if (l1 != NULL) {
+            if (l1 != nullptr) {
                 sum += l1->val;
                 l1 = l1->next;
             }
-            if (l2 != NULL) {
+            if (l2 != nullptr) {
                 sum += l2->val;
                 l2 = l2->next;
             }
 
-            ListNode *node = new ListNode(sum % 10);
+            auto *node = new ListNode(sum % 10);
             if (tail->val == -1) {
                 head->next = node;
             } else {
@@ -73,7 +73,7 @@ public:
             temp = sum / 10;
         }
         if (temp != 0) {
-            ListNode *tempNode = new ListNode(temp);
+            auto *tempNode = new ListNode(temp);
             tail->next = tempNode;
         }
         return head->next;
@@ -82,8 +82,8 @@ public:
 
 int main() {
 
-    ListNode *a = new ListNode(2);
-    ListNode *b = new ListNode(5);
+    auto *a = new ListNode(2);
+    auto *b = new ListNode(5);
     a->add(4);
     a->add(9);
     b->add(6);
@@ -93,7 +93,6 @@ int main() {
     cout << endl;
     b->print();
     cout << endl;
-    Solution solution;
-    solution.addTwoNumbers(a, b)->print();
+    Solution::addTwoNumbers(a, b)->print();
     return 0;
 }

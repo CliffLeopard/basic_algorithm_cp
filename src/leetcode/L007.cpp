@@ -13,7 +13,7 @@ using namespace std;
 #define str_max to_string(INT32_MAX)
 class Solution {
 public:
-    int reverse(int x) {
+    static int reverse(int x) {
         int result = 0;
         if (x == INT32_MIN)
             return 0;
@@ -41,7 +41,6 @@ int main() {
 
     cout << INT32_MIN << endl;
     cout << INT32_MAX << endl << endl;
-    Solution solution;
     int demos[] = {
             INT32_MIN + 1,
             INT32_MAX,
@@ -51,7 +50,7 @@ int main() {
             -1463847412,
             -2147483412
     };
-    for (int i = 0; i < size(demos); i++) {
-        cout << solution.reverse(demos[i]) << endl;
+    for (int demo : demos) {
+        cout << Solution::reverse(demo) << endl;
     }
 }

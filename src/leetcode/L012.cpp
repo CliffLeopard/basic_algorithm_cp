@@ -24,8 +24,7 @@ using namespace std;
 class Solution {
 public:
     string intToRoman(int num) {
-        string result = "";
-        int len = 13;
+        string result;
         for (int i = 0; i < 13; i++) {
             while (num >= romToInt[i].first) {
                 result += romToInt[i].second;
@@ -60,7 +59,7 @@ private:
 class Solution2 {
 public:
     string intToRoman(int num) {
-        string result = "";
+        string result;
         int j = 1000;
         while (num > 0) {
             int now = num / j;
@@ -79,6 +78,8 @@ public:
                 case 9:
                     result += aMap[j];
                     result += aMap[j * 10];
+                    break;
+                default:
                     break;
             }
             num %= j;
@@ -103,6 +104,6 @@ private:
 int main() {
     Solution solution;
     int input[] = {3, 4, 9, 58, 1994, 600, 3392, 1935, 1321, 1451, 1531};
-    for (int i = 0; i < size(input); i++)
-        cout << solution.intToRoman(input[i]) << endl;
+    for (int i : input)
+        cout << solution.intToRoman(i) << endl;
 }

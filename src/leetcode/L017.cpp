@@ -25,8 +25,8 @@ public:
             return result;
         else {
             string now = number_array[digits[0] - '2'];
-            for (int i = 0; i < now.length(); i++)
-                result.push_back(string(1, now[i]));
+            for (char i : now)
+                result.emplace_back(1, i);
         }
         return combineTwoSet(result, digits, 1, n);
     }
@@ -73,8 +73,8 @@ public:
         int n = digits.length();
         if (n == 0)return result;
         string root = number_array[digits[0] - '2'];
-        for (int i = 0; i < root.length(); i++)
-            result.push_back(string(1, root[i]));
+        for (char i : root)
+            result.emplace_back(1, i);
         return combineTwoSet(result, digits, 1);
     }
 
@@ -105,8 +105,8 @@ int main() {
     vector<string>::iterator iterator;
     for (iterator = input.begin(); iterator != input.end(); iterator++) {
         vector<string> result = solution.letterCombinations(*iterator);
-        for (int i = 0; i < result.size(); i++)
-            cout << result[i] << "  ";
+        for (auto & i : result)
+            cout << i << "  ";
         cout << endl;
     }
 }

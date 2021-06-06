@@ -18,7 +18,7 @@ using namespace std;
  */
 class Solution {
 public:
-    int maxArea(vector<int> &height) {
+    static int maxArea(vector<int> &height) {
         int result = 0;
         int l = 0, r = height.size() - 1;
         while (l < r) {
@@ -37,7 +37,7 @@ public:
  */
 class Solution2 {
 public:
-    int maxArea(vector<int> &height) {
+    static int maxArea(vector<int> &height) {
         int result = 0;
         int l = 0, r = height.size() - 1;
         while (l < r) {
@@ -58,7 +58,7 @@ public:
  */
 class Solution0 {
 public:
-    int maxArea(vector<int> &height) {
+    static int maxArea(vector<int> &height) {
         int n = height.size();
         int temp = 0;
         int maxAr = 0;
@@ -74,8 +74,7 @@ public:
 };
 
 int main() {
-    Solution2 solution;
     vector<int> area = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-    cout << solution.maxArea(area) << endl;
+    cout << Solution2::maxArea(area) << endl;
     return 0;
 }
