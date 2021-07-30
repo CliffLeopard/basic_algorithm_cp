@@ -10,6 +10,8 @@ add_executable(uva401 src/ch3/uva401.cpp)
 add_executable(uva340 src/ch3/uva340.cpp)
 add_executable(uva1583 src/ch3/uva1583.cpp)
 add_executable(uva1585 src/ch3/uva1585.cpp)
+
+# Leet Code
 add_executable(L001 src/leetcode/L001.cpp)
 add_executable(L002 src/leetcode/L002.cpp)
 add_executable(L003 src/leetcode/L003.cpp)
@@ -42,6 +44,14 @@ add_executable(L029 src/leetcode/L029.cpp)
 add_executable(L030 src/leetcode/L030.cpp)
 add_executable(L146 src/leetcode/L146.cpp)
 add_executable(L460 src/leetcode/L460.cpp)
+
+# 排序算法
+add_executable(SortInsert src/ita/chap02/sort_insert.cpp)
+add_executable(SortSelect src/ita/chap02/sort_select.cpp)
+add_executable(SortBubble src/ita/chap02/sort_bubble.cpp)
+add_executable(SortShell src/ita/chap02/sort_shell.cpp)
+
+add_executable(BaseFunction src/base_function/base_function.h src/base_function/base_function.cpp)
 
 #严蔚敏版数据结构
 add_executable(KMP src/data_structure/KMP.cpp)

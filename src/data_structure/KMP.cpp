@@ -106,5 +106,5 @@ int main() {
     string s = "hello";
     string t = "ll";
 //    cout << "index1:" << kmp.index1("", "", 0) << endl;
-    cout << "index2:" << kmp.index2("", "") << endl;
+    cout << "index2:" << kmp.index2(s, t) << endl;
 }
