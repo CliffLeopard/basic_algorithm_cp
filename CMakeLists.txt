@@ -42,6 +42,7 @@ add_executable(L027 src/leetcode/L027.cpp)
 add_executable(L028 src/leetcode/L028.cpp)
 add_executable(L029 src/leetcode/L029.cpp)
 add_executable(L030 src/leetcode/L030.cpp)
+add_executable(L031 src/leetcode/L031.cpp)
 add_executable(L146 src/leetcode/L146.cpp)
 add_executable(L460 src/leetcode/L460.cpp)
 
